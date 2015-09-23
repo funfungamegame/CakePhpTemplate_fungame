@@ -1,0 +1,76 @@
+cakePhp的后台编程模板
+
+包括
+1.mvc的新增接口模板
+2.使用例子
+
+
+使用步骤（调通MVC）
+1.将模板工程放在网站根目录，首页定位到index.php
+2.修改/app/Config/database.php.default文件中的数据库配置，并将文件名改为database.php
+3.进入自己的数据库，执行/sql/test.sql中的sql文新建数据表并初始化数据
+4.检验MVC是否生效
+
+方法1：
+在浏览器中输入
+http://[你的主页域名]/CakePhpTemplate/api/test/index
+http://[你的主页域名]/CakePhpTemplate/api/test/getClasses
+
+两个请求分别对应/Controller/TestController.php中的
+index()
+getClasses()
+两个方法
+
+请求结果分别为
+Hello,cakephp.
+This is in test api index().
+
+Hello,cakephp.
+This is in test api getClasses().
+search result: id = 5 name = Priest
+
+如果请求结果显示正确，则说明MVC配置已生效
+
+方法2：
+在任意支持jquery的网页中输入执行以下脚本
+
+            $.ajax({
+                url: "http://[你的主页域名]/CakePhpTemplate/api/test/getClasses",
+                type: "post",
+                dataType: "json",
+                data: {
+
+                },
+                success: function(data) {
+                    console.log("success");
+                    var result = data.result;
+                    console.log(data);
+                },
+                error: function(err) {
+                    console.log("error");
+                    var errorCode = err.code;
+                    console.log(err);
+                }
+            });
+
+查看日志中打印的结果
+因为有跨域问题，返回结果可能是error。返回值仍然是正确的，最好的做法是在自己网站的某页面下执行改脚本则不会有跨域的问题，（需要jquery支持）
+
+
+使用步骤（新增服务）
+1.在/app/Config/routes.php文件增加一个服务地址和对应的controller
+2.在/app/Controler目录下新增Controller
+3.在/app/Model目录下新增Model
+4.参考routes中的TemplateApi和TemplateController.php和TemplateModel.php的写法，或者直接拷贝这些文件改成自己需要的服务名即可
+
+
+
+
+
+
+
+
+
+
+
+
